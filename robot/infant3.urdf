@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<robot name="infant3" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find infant3)/urdf/base/base.urdf.xacro"/>
+  <xacro:include filename="$(find infant3)/urdf/wheel/wheel.urdf.xacro"/>
+  <xacro:include filename="$(find infant3)/urdf/sensors/lrf.urdf.xacro"/>
+  <xacro:include filename="$(find infant3)/urdf/sensors/camera.urdf.xacro"/>
+
+  <!-- Link & Joint -->
+  <link name="base_footprint"/>
+
+  <xacro:base parent="base_footprint">
+    <origin xyz="0 0 0"/>
+  </xacro:base>
+
+  <xacro:wheel prefix="right" parent="base_link">
+    <origin xyz="0 -0.2135 0" rpy="0 0 ${M_PI/2}"/>
+    <axis xyz="1 0 0"/>
+  </xacro:wheel>
+
+  <xacro:wheel prefix="left" parent="base_link">
+    <origin xyz="0 0.2135 0" rpy="0 0 ${-M_PI/2}"/>
+    <axis xyz="-1 0 0"/>
+  </xacro:wheel>
+
+  <xacro:hokuyo prefix="front" parent="base_link">
+    <origin xyz="0.141 0 0.0665" rpy="${M_PI} 0 0"/>
+  </xacro:hokuyo>
+
+  <xacro:hokuyo prefix="rear" parent="base_link">
+    <origin xyz="-0.459 0 0.0835" rpy="0 0 ${M_PI}"/>
+  </xacro:hokuyo>
+
+  <xacro:camera prefix="front" parent="base_link">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:camera>
+
+  <!-- Transmission -->
+  <xacro:wheel_trans prefix="right"/>
+  <xacro:wheel_trans prefix="left"/>
+
+  <!-- Gazebo -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/infant3</robotNamespace>
+    </plugin>
+  </gazebo>
+  <xacro:base_gazebo/>
+  <xacro:wheel_gazebo prefix="right"/>
+  <xacro:wheel_gazebo prefix="left"/>
+  <xacro:hokuyo_gazebo prefix="front" min_rad=" ${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
+  <xacro:hokuyo_gazebo prefix="rear" min_rad=" ${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
+  <xacro:camera_gazebo prefix="front" width="800" height="800"/>
+
+</robot>
