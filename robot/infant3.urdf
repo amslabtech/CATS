@@ -49,8 +49,8 @@
   <xacro:base_gazebo/>
   <xacro:wheel_gazebo prefix="right"/>
   <xacro:wheel_gazebo prefix="left"/>
-  <xacro:hokuyo_gazebo prefix="front" min_rad=" ${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
-  <xacro:hokuyo_gazebo prefix="rear" min_rad=" ${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
-  <xacro:camera_gazebo prefix="front" width="800" height="800"/>
+  <xacro:hokuyo_gazebo prefix="front" min_rad="${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
+  <xacro:hokuyo_gazebo prefix="rear" min_rad="${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
+  <xacro:camera_gazebo prefix="front"/>
 
 </robot>
