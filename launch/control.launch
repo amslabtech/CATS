@@ -5,7 +5,7 @@
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager"
-  type="spawner" ns="infant3" output="screen"
+  type="spawner" ns="/infant3" output="screen"
   args="
      joint_state_controller
      diff_drive_controller
