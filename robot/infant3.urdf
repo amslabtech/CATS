@@ -32,9 +32,9 @@
     <origin xyz="-0.459 0 0.0835" rpy="0 0 ${M_PI}"/>
   </xacro:hokuyo>
 
-  <xacro:camera prefix="front" parent="base_link">
+  <xacro:webcamera prefix="front" parent="base_link">
     <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:camera>
+  </xacro:webcamera>
 
   <!-- Transmission -->
   <xacro:wheel_trans prefix="right"/>
