@@ -6,6 +6,7 @@
   <xacro:include filename="$(find infant3)/urdf/wheel/wheel.urdf.xacro"/>
   <xacro:include filename="$(find infant3)/urdf/sensors/lrf.urdf.xacro"/>
   <xacro:include filename="$(find infant3)/urdf/sensors/camera.urdf.xacro"/>
+  <xacro:include filename="$(find infant3)/urdf/caster/caster.urdf.xacro"/>
 
   <!-- Link & Joint -->
   <link name="base_footprint"/>
@@ -15,30 +16,46 @@
   </xacro:base>
 
   <xacro:wheel prefix="right" parent="base_link">
-    <origin xyz="0 -0.2135 0" rpy="0 0 ${M_PI/2}"/>
+    <origin xyz="0.220 -0.2135 0.125" rpy="0 0 ${M_PI/2}"/>
     <axis xyz="1 0 0"/>
   </xacro:wheel>
 
   <xacro:wheel prefix="left" parent="base_link">
-    <origin xyz="0 0.2135 0" rpy="0 0 ${-M_PI/2}"/>
+    <origin xyz="0.220 0.2135 0.125" rpy="0 0 ${-M_PI/2}"/>
     <axis xyz="-1 0 0"/>
   </xacro:wheel>
 
+  <xacro:caster prefix="right" parent="base_link">
+    <origin xyz="-0.3175 -0.140 0.050" rpy="0 0 0"/>
+  </xacro:caster>
+
+  <xacro:caster prefix="left" parent="base_link">
+    <origin xyz="-0.3175 0.140 0.050" rpy="0 0 0"/>
+  </xacro:caster>
+
   <xacro:hokuyo prefix="front" parent="base_link">
-    <origin xyz="0.141 0 0.0665" rpy="${M_PI} 0 0"/>
+    <origin xyz="0.361 0 0.1915" rpy="${M_PI} 0 0"/>
   </xacro:hokuyo>
 
   <xacro:hokuyo prefix="rear" parent="base_link">
-    <origin xyz="-0.459 0 0.0835" rpy="0 0 ${M_PI}"/>
+    <origin xyz="-0.239 0 0.2085" rpy="0 0 ${M_PI}"/>
   </xacro:hokuyo>
 
   <xacro:webcamera prefix="front" parent="base_link">
-    <origin xyz="0 0 0.75" rpy="0 0 0"/>
+    <origin xyz="0.135 0 0.685" rpy="0 0 0"/>
+  </xacro:webcamera>
+
+  <xacro:webcamera prefix="right" parent="base_link">
+    <origin xyz="0.135 -0.100 0.685" rpy="0 0 ${-M_PI/3}"/>
+  </xacro:webcamera>
+
+  <xacro:webcamera prefix="left" parent="base_link">
+    <origin xyz="0.135 0.100 0.685" rpy="0 0 ${M_PI/3}"/>
   </xacro:webcamera>
 
   <!--xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
   <HDL-32E parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
-    <origin xyz="0 0 0.85" rpy="0 ${M_PI/12} 0" />
+    <origin xyz="0.004135 0 0.81678" rpy="0 ${M_PI/12} 0" />
   </HDL-32E-->
 
 
@@ -55,8 +72,12 @@
   <xacro:base_gazebo/>
   <xacro:wheel_gazebo prefix="right"/>
   <xacro:wheel_gazebo prefix="left"/>
+  <xacro:caster_gazebo prefix="right"/>
+  <xacro:caster_gazebo prefix="left"/>
   <xacro:hokuyo_gazebo prefix="front" min_rad="${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
   <xacro:hokuyo_gazebo prefix="rear" min_rad="${-M_PI*0.75}" max_rad="${M_PI*0.75}" min_range="0.40" max_range="10"/>
   <xacro:camera_gazebo prefix="front"/>
+  <xacro:camera_gazebo prefix="right"/>
+  <xacro:camera_gazebo prefix="left"/>
 
 </robot>

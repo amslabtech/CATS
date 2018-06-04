@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find infant3)/urdf/common.xacro"/>
+
+  <xacro:macro name="caster" params="prefix parent *joint_origin">
+    <joint name="${prefix}_caster_joint" type="fixed">
+      <insert_block name="joint_origin"/>
+      <parent link="${parent}"/>
+      <child link="${prefix}_caster_link"/>
+    </joint>
+
+    <link name="${prefix}_caster_link">
+      <visual>
+        <origin xyz="0 0.0125 0" rpy="${M_PI/2} 0 ${-M_PI/2}"/>
+        <geometry>
+          <mesh filename="package://infant3/meshes/STL/caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0.0125 0" rpy="${M_PI/2} 0 ${-M_PI/2}"/>
+        <geometry>
+          <mesh filename="package://infant3/meshes/STL/caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0.0125 0" rpy="${M_PI/2} 0 ${-M_PI/2}"/>
+        <cylinder_inertial mass="0.550"
+          radius="0.050" length="0.025"/>
+      </inertial>
+    </link>
+  </xacro:macro>
+
+  <xacro:macro name="caster_gazebo" params="prefix">
+    <gazebo reference="${prefix}_caster_link">
+      <selfCollide>false</selfCollide>
+      <mu1 value="0"/>
+      <mu2 value="0"/>
+    </gazebo>
+  </xacro:macro>
+
+  </robot>
