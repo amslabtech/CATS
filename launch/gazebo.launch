@@ -1,5 +1,5 @@
 <launch>
-  <arg name="model" default="$(find infant3)/robot/infant3.urdf"/>
+  <arg name="model" default="$(find cats)/robot/cats.urdf"/>
 
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
@@ -17,10 +17,10 @@
 
   <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)"/>
 
-  <include file="$(find infant3)/launch/control.launch"/>
+  <include file="$(find cats)/launch/control.launch"/>
 
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-    args="-urdf -model infant3 -param robot_description"/>
+    args="-urdf -model cats -param robot_description"/>
 
 
 </launch>

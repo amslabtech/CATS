@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="rvizconfig" default="$(find infant3)/config/urdf.rviz"/>
+  <arg name="rvizconfig" default="$(find cats)/config/urdf.rviz"/>
 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
 

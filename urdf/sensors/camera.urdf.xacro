@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find infant3)/urdf/common.xacro"/>
+  <xacro:include filename="$(find cats)/urdf/common.xacro"/>
 
   <xacro:macro name="webcamera" params="prefix parent *joint_origin">
 
@@ -17,14 +17,14 @@
       <visual>
         <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <geometry>
-          <mesh filename="package://infant3/meshes/STL/camera.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://cats/meshes/STL/camera.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
 
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://infant3/meshes/STL/camera.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://cats/meshes/STL/camera.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
 

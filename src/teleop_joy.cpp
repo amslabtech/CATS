@@ -17,7 +17,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "teleop_joy");
   ros::NodeHandle nh;
 
-  ros::Publisher velocity_pub = nh.advertise<geometry_msgs::Twist>("/infant3/diff_drive_controller/cmd_vel", 100);
+  ros::Publisher velocity_pub = nh.advertise<geometry_msgs::Twist>("/cats/diff_drive_controller/cmd_vel", 100);
 
   ros::Subscriber joy_sub = nh.subscribe("/joy", 100, joy_callback);
 

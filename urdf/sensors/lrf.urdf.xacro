@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find infant3)/urdf/common.xacro"/>
+  <xacro:include filename="$(find cats)/urdf/common.xacro"/>
 
   <xacro:macro name="hokuyo" params="prefix parent *joint_origin">
 
@@ -15,13 +15,13 @@
   <link name="${prefix}_laser">
     <visual>
       <geometry>
-        <mesh filename="package://infant3/meshes/STL/lrf.stl"/>
+        <mesh filename="package://cats/meshes/STL/lrf.stl"/>
       </geometry>
     </visual>
 
     <collision>
       <geometry>
-        <mesh filename="package://infant3/meshes/STL/lrf.stl"/>
+        <mesh filename="package://cats/meshes/STL/lrf.stl"/>
       </geometry>
     </collision>
 

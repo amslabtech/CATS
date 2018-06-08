@@ -2,7 +2,7 @@
 
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find infant3)/urdf/common.xacro"/>
+  <xacro:include filename="$(find cats)/urdf/common.xacro"/>
   <xacro:macro name="base" params="parent *joint_origin">
     <joint name="base_link_joint" type="fixed">
       <insert_block name="joint_origin"/>
@@ -14,7 +14,7 @@
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <geometry>
-          <mesh filename="package://infant3/meshes/STL/base.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://cats/meshes/STL/base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision>

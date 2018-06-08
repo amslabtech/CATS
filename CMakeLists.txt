@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(infant3)
+project(cats)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -104,7 +104,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES infant3
+#  LIBRARIES cats
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
@@ -122,7 +122,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/infant3.cpp
+#   src/${PROJECT_NAME}/cats.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,7 +133,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/infant3_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/cats_node.cpp)
 add_executable(infant_teleop_joy src/teleop_joy.cpp)
 
 ## Rename C++ executable without prefix
@@ -194,7 +194,7 @@ target_link_libraries(infant_teleop_joy
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_infant3.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_cats.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
