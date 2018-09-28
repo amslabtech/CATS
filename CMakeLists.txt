@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  pcl_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -135,6 +136,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/cats_node.cpp)
 add_executable(infant_teleop_joy src/teleop_joy.cpp)
+add_executable(pcd_crcr src/pcd_crcr.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,6 +153,9 @@ add_executable(infant_teleop_joy src/teleop_joy.cpp)
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(infant_teleop_joy
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(pcd_crcr
   ${catkin_LIBRARIES}
 )
 

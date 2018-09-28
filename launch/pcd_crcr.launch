@@ -1,0 +1,6 @@
+<launch>
+
+  <node pkg="cats" type="pcd_crcr" name="pcd_crcr" output="screen">
+    <param name="OUTPUT_FILE_NAME" value="~/map/map_crcred.pcd" type="str"/>
+  </node>
+</launch>
