@@ -8,6 +8,8 @@
 #include <pcl_conversions/pcl_conversions.h>
 
 #include <string>
+#include <iostream>
+#include <fstream>
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
@@ -34,6 +36,10 @@ private:
   visualization_msgs::Marker crcr_points;
   visualization_msgs::Marker crcr_lines;
   bool crcr_flag;
+  double x_upper_limit;
+  double y_upper_limit;
+  double x_lower_limit;
+  double y_lower_limit;
 };
 
 int main(int argc, char** argv)
@@ -115,26 +121,50 @@ void PCDCrcrer::pcd_callback(const sensor_msgs::PointCloud2ConstPtr& msg)
 
 void PCDCrcrer::crcr_callback(const geometry_msgs::PoseStampedConstPtr& msg)
 {
-  geometry_msgs::PoseStamped temp = *msg;
-  crcr_points.points.push_back(temp.pose.position);
-  if(crcr_lines.points.size() < 2){
-    crcr_lines.points.push_back(temp.pose.position);
-  }else if(crcr_lines.points.size()==2){
-    crcr_lines.points.push_back(crcr_lines.points[1]);
-    crcr_lines.points.push_back(temp.pose.position);
-  }else if(crcr_lines.points.size()==4){
-    crcr_lines.points.push_back(crcr_lines.points[3]);
-    crcr_lines.points.push_back(temp.pose.position);
-    crcr_lines.points.push_back(temp.pose.position);
-    crcr_lines.points.push_back(crcr_lines.points[0]);
-  }
+  geometry_msgs::PoseStamped crcr_p = *msg;
+  crcr_points.points.push_back(crcr_p.pose.position);
   if(crcr_points.points.size() == 4){
     crcr_flag = true;
+    x_upper_limit = crcr_points.points[0].x;
+    x_lower_limit = crcr_points.points[0].x;
+    y_upper_limit = crcr_points.points[0].y;
+    y_lower_limit = crcr_points.points[0].y;
+    for(int i=1;i<4;i++){
+      if(x_upper_limit < crcr_points.points[i].x){
+        x_upper_limit = crcr_points.points[i].x;
+      }else if(x_lower_limit > crcr_points.points[i].x){
+        x_lower_limit = crcr_points.points[i].x;
+      }
+      if(y_upper_limit < crcr_points.points[i].y){
+        y_upper_limit = crcr_points.points[i].y;
+      }else if(y_lower_limit > crcr_points.points[i].y){
+        y_lower_limit = crcr_points.points[i].y;
+      }
+    }
+    geometry_msgs::Point temp;
+    temp.x = x_upper_limit;
+    temp.y = y_upper_limit;
+    crcr_lines.points.push_back(temp);
+    temp.x = x_lower_limit;
+    temp.y = y_upper_limit;
+    crcr_lines.points.push_back(temp);
+    crcr_lines.points.push_back(temp);
+    temp.x = x_lower_limit;
+    temp.y = y_lower_limit;
+    crcr_lines.points.push_back(temp);
+    crcr_lines.points.push_back(temp);
+    temp.x = x_upper_limit;
+    temp.y = y_lower_limit;
+    crcr_lines.points.push_back(temp);
+    crcr_lines.points.push_back(temp);
+    crcr_lines.points.push_back(crcr_lines.points[0]);
   }
 }
 
 void PCDCrcrer::crcr(void)
 {
+
+  pcl::io::savePCDFile(output_file_name, pcd_map);
   crcr_flag = false;
   crcr_points.points.clear();
   crcr_lines.points.clear();
