@@ -40,6 +40,7 @@ private:
   double y_upper_limit;
   double x_lower_limit;
   double y_lower_limit;
+  int crcr_count;
 };
 
 int main(int argc, char** argv)
@@ -95,6 +96,7 @@ PCDCrcrer::PCDCrcrer(void)
   crcr_lines.color.a = 1;
   crcr_lines.scale.x = 0.3;
   crcr_lines.lifetime = ros::Duration(0);
+  crcr_count = 0;
 }
 
 void PCDCrcrer::process(void)
@@ -164,8 +166,11 @@ void PCDCrcrer::crcr_callback(const geometry_msgs::PoseStampedConstPtr& msg)
 void PCDCrcrer::crcr(void)
 {
 
-  pcl::io::savePCDFile(output_file_name, pcd_map);
+  std::string fname = output_file_name + "_" + std::to_string(crcr_count) + ".pcd";
+  pcl::io::savePCDFile(fname, pcd_map);
+  std::cout << "Saved as " << fname << std::endl;
   crcr_flag = false;
   crcr_points.points.clear();
   crcr_lines.points.clear();
+  crcr_count++;
 }

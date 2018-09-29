@@ -1,6 +1,8 @@
 <launch>
 
+  <arg name="output_file_name"/>
   <node pkg="cats" type="pcd_crcr" name="pcd_crcr" output="screen">
-    <param name="OUTPUT_FILE_NAME" value="/home/amsl/map/map_crcred.pcd" type="str"/>
+    <param name="OUTPUT_FILE_NAME" value="$(arg output_file_name)" type="str"/>
   </node>
+
 </launch>
