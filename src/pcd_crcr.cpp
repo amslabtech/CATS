@@ -6,6 +6,7 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
+#include <pcl/filters/extract_indices.h>
 
 #include <string>
 #include <iostream>
@@ -41,6 +42,7 @@ private:
   double x_lower_limit;
   double y_lower_limit;
   int crcr_count;
+  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr;
 };
 
 int main(int argc, char** argv)
@@ -97,6 +99,7 @@ PCDCrcrer::PCDCrcrer(void)
   crcr_lines.scale.x = 0.3;
   crcr_lines.lifetime = ros::Duration(0);
   crcr_count = 0;
+  cloud_ptr = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
 }
 
 void PCDCrcrer::process(void)
@@ -119,6 +122,7 @@ void PCDCrcrer::pcd_callback(const sensor_msgs::PointCloud2ConstPtr& msg)
 {
   sensor_msgs::PointCloud2 temp = *msg;
   pcd_map = temp;
+  pcl::fromROSMsg(pcd_map, *cloud_ptr);
 }
 
 void PCDCrcrer::crcr_callback(const geometry_msgs::PoseStampedConstPtr& msg)
@@ -165,7 +169,20 @@ void PCDCrcrer::crcr_callback(const geometry_msgs::PoseStampedConstPtr& msg)
 
 void PCDCrcrer::crcr(void)
 {
+  pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
+  pcl::ExtractIndices<pcl::PointXYZ> extract;
+  for(int i=0;i<(*cloud_ptr).size();i++){
+    pcl::PointXYZ pt(cloud_ptr->points[i].x, cloud_ptr->points[i].y, cloud_ptr->points[i].z);
+    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit))){
+      inliers->indices.push_back(i);
+    }
+  }
+  extract.setInputCloud(cloud_ptr);
+  extract.setIndices(inliers);
+  extract.setNegative(true);
+  extract.filter(*cloud_ptr);
 
+  pcl::toROSMsg(*cloud_ptr, pcd_map);
   std::string fname = output_file_name + "_" + std::to_string(crcr_count) + ".pcd";
   pcl::io::savePCDFile(fname, pcd_map);
   std::cout << "Saved as " << fname << std::endl;
@@ -174,3 +191,4 @@ void PCDCrcrer::crcr(void)
   crcr_lines.points.clear();
   crcr_count++;
 }
+
