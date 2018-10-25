@@ -11,24 +11,34 @@ int imu_count = 0;
 double yawrate_ = 0;
 double offset_yawrate = 0;
 bool received_flag = false;
-double OFFSET_YAWRATE = 0.00206676;
+// double OFFSET_YAWRATE = 0.00206676;
+double OFFSET_YAWRATE = 0.001944;
+ros::Time first_time;
+bool first_flag = false;
 
 void imu_callback(const sensor_msgs::ImuConstPtr& msg)
 {
   imu_data = *msg;
-  if(imu_count < IMU_COUNT){
+  if(!first_flag){
+	first_time = msg->header.stamp;
+	first_flag = true;
+  }
+	  
+  // if(imu_count < IMU_COUNT){
+   if((imu_data.header.stamp - first_time) < ros::Duration(15.0)){
 	yawrate_ += imu_data.angular_velocity.z;
 	std::cout << "=== calibrating ===" << std::endl;
 	std::cout << imu_count << " / " << IMU_COUNT << std::endl;
 	imu_count++;
-  }else{
+   }
+   else{
 	offset_yawrate = yawrate_ / (double)IMU_COUNT;
 	std::cout << "=== yawrate ===" << std::endl;
 	std::cout << offset_yawrate << "[rad/s]" << std::endl;;
 	std::cout << imu_data.angular_velocity.z << "[rad/s]" << std::endl;
 	std::cout << imu_data.angular_velocity.z - offset_yawrate << "[rad/s]" << std::endl;
-  }
-  received_flag = true;
+	received_flag = true;
+   }
 }
 
 int main(int argc, char** argv)
