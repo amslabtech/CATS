@@ -12,6 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   pcl_ros
+  geometry_msgs
+  nav_msgs
+  sensor_msgs
+  std_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -138,6 +143,7 @@ include_directories(
 add_executable(infant_teleop_joy src/teleop_joy.cpp)
 add_executable(pcd_crcr src/pcd_crcr.cpp)
 add_executable(tkhsh_imu src/tkhsh_imu.cpp)
+add_executable(dead_reckoning src/dead_reckoning.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -160,6 +166,9 @@ target_link_libraries(pcd_crcr
   ${catkin_LIBRARIES}
 )
 target_link_libraries(tkhsh_imu
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(dead_reckoning
   ${catkin_LIBRARIES}
 )
 
