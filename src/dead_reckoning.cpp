@@ -115,7 +115,7 @@ void
 Complement::imuCallback(const sensor_msgs::Imu::Ptr imu){
 
 	dyaw = imu->angular_velocity.z;
-	dyaw -= drift_dyaw;					//tkhsh_imuの方で調節
+	// dyaw -= drift_dyaw;					//tkhsh_imuの方で調節
 	current_time = imu->header.stamp;
 	if(!start_flag) last_time = current_time;
 	start_flag = true;
@@ -190,7 +190,7 @@ Complement::start(){
 
 
 int main (int argc, char** argv){
-	ros::init(argc,argv,"imu_complement");
+	ros::init(argc,argv,"dead_reckoning");
 	ros::NodeHandle n;
 
 	cout<<"------complement start---------"<<endl;
