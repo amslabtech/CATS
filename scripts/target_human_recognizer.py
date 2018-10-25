@@ -17,6 +17,17 @@ def ImageCallback(data):
     #cv2.rectangle(bgr_image, (0, 240), (640, 480), (0, 0, 0), cv2.FILLED)
     cv2.namedWindow("bgr", cv2.WINDOW_NORMAL)
     cv2.imshow("bgr", bgr_image)
+    gray_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2GRAY)
+    # hog
+    hog = cv2.HOGDescriptor()
+    hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+    hogParams = {'winStride': (8, 8), 'padding': (32, 32), 'scale': 1.05}
+    human, r = hog.detectMultiScale(gray_image, **hogParams)
+    hog_image = bgr_image
+    for (x, y, w, h) in human:
+      cv2.rectangle(hog_image, (x, y), (x + w, y+h), (0,0,200), 3)
+    cv2.namedWindow("hog", cv2.WINDOW_NORMAL)
+    cv2.imshow("hog", hog_image)
     # hsv
     hsv_image = cv2.cvtColor(bgr_image, cv2.COLOR_BGR2HSV)
     cv2.namedWindow("hsv", cv2.WINDOW_NORMAL)

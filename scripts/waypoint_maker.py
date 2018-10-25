@@ -7,6 +7,9 @@ import numpy as np
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseArray
 from geometry_msgs.msg import PoseStamped
+from interactive_markers.interactive_marker_server import *
+from interactive_markers.menu_handler import *
+
 
 class WaypointMaker():
   def __init__(self):
@@ -15,6 +18,8 @@ class WaypointMaker():
     self.wp_pub = rospy.Publisher('/waypoints', PoseArray, queue_size=10)
     self.file_name = "kakunin_waypoints.txt"
     self.num = 0
+    self.server = None
+    self.menu_handler = MenuHandler()
 
   def pose_callback(self, data):
     print "waypoint received"
@@ -22,6 +27,9 @@ class WaypointMaker():
     self.waypoints.poses.append(data.pose)
     self.num += 1
     self.wp_pub.publish(self.waypoints)
+
+  def interact_callback(self, data):
+    print data
 
   def process(self):
     print "=== waypoint_maker ==="
@@ -34,6 +42,10 @@ class WaypointMaker():
     #waypoints.poses.append(p0)
 
     r = rospy.Rate(10)
+
+    self.server = InteractiveMarkerServer("control")
+    self.menu_handler.insert("entry", callback=self.interact_callback)
+    self.server.applyChanges()
 
     print "press n to exit"
 

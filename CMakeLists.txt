@@ -137,6 +137,7 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/cats_node.cpp)
 add_executable(infant_teleop_joy src/teleop_joy.cpp)
 add_executable(pcd_crcr src/pcd_crcr.cpp)
+add_executable(tkhsh_imu src/tkhsh_imu.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -156,6 +157,9 @@ target_link_libraries(infant_teleop_joy
   ${catkin_LIBRARIES}
 )
 target_link_libraries(pcd_crcr
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(tkhsh_imu
   ${catkin_LIBRARIES}
 )
 
