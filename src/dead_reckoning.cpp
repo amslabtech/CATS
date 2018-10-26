@@ -80,9 +80,9 @@ Complement::Complement(ros::NodeHandle &n)
 
 	n.param("header_frame" ,HEADER_FRAME, {0});
 	n.param("child_frame" ,CHILD_FRAME, {0});
-	n.param("init_x" ,init_pose.x, 0.0);
-	n.param("init_y" ,init_pose.y, 0.0);
-	n.param("init_yaw" ,init_pose.theta, 0.0);
+	n.param("init_x" ,init_pose.x, {0.0});
+	n.param("init_y" ,init_pose.y, {0.0});
+	n.param("init_yaw" ,init_pose.theta, {0.0});	//rad
 	n.param("odom_topic" ,ODOM_TOPIC, {0});
 	n.param("imu_topic" ,IMU_TOPIC, {0});
 	n.param("dyaw/drift",drift_dyaw,{0});
@@ -98,6 +98,9 @@ Complement::Complement(ros::NodeHandle &n)
 	lcl_vis.header.frame_id = HEADER_FRAME;
 	lcl_vis.child_frame_id = CHILD_FRAME;
 
+	x = init_pose.x;
+	y = init_pose.y;
+	yaw = init_pose.theta;
 	prepare();
 }
 
@@ -115,7 +118,7 @@ void
 Complement::imuCallback(const sensor_msgs::Imu::Ptr imu){
 
 	dyaw = imu->angular_velocity.z;
-	// dyaw -= drift_dyaw;					//tkhsh_imuの方で調節
+	if("/imu/data/calibrated" != IMU_TOPIC) dyaw -= drift_dyaw;	//tkhsh_imuの方で調節
 	current_time = imu->header.stamp;
 	if(!start_flag) last_time = current_time;
 	start_flag = true;
@@ -129,10 +132,19 @@ Complement::prepare(){
 
 	transform.setOrigin( tf::Vector3(init_pose.x, init_pose.y, 0.0) );
 	tf::Quaternion q;
-	q.setRPY(0, 0, init_pose.theta*M_PI/180.0);
+	q.setRPY(0, 0, init_pose.theta);
 
 	transform.setRotation(q);
 	br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), HEADER_FRAME, CHILD_FRAME));
+
+	// lcl_vis.header.stamp = ros::Time::now();
+	// lcl_vis.pose.pose.position.x = init_pose.x;
+	// lcl_vis.pose.pose.position.y = init_pose.y;
+	// lcl_vis.pose.pose.position.z = 0.0;	
+	// lcl_vis.pose.pose.orientation.z = sin(init_pose.theta*0.5);
+	// lcl_vis.pose.pose.orientation.w = cos(init_pose.theta*0.5);
+    //
+	// lcl_vis_pub.publish(lcl_vis);
 }
 
 void
@@ -146,8 +158,7 @@ Complement::calc(){
 
 	double dist = odom_vel * dt; 
 
-	yaw += dyaw * dt; 
-
+	yaw += dyaw * dt;
 	while(yaw > M_PI) yaw -= 2*M_PI;
 	while(yaw < -M_PI) yaw += 2*M_PI;
 
