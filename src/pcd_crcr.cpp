@@ -7,6 +7,7 @@
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/filters/extract_indices.h>
+#include <pcl/filters/passthrough.h>
 #include <pcl/segmentation/sac_segmentation.h>
 
 #include <string>
@@ -44,6 +45,7 @@ private:
   double y_lower_limit;
   int crcr_count;
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr;
+  int pcd_pub_count;
 };
 
 int main(int argc, char** argv)
@@ -101,11 +103,16 @@ PCDCrcrer::PCDCrcrer(void)
   crcr_lines.lifetime = ros::Duration(0);
   crcr_count = 0;
   cloud_ptr = pcl::PointCloud<pcl::PointXYZ>::Ptr(new pcl::PointCloud<pcl::PointXYZ>);
+  pcd_pub_count = 0;
 }
 
 void PCDCrcrer::process(void)
 {
-  pcd_pub.publish(pcd_map);
+  pcd_pub_count++;
+  if(pcd_pub_count == 10){
+    pcd_pub.publish(pcd_map);
+    pcd_pub_count = 0;
+  }
   crcr_point_pub.publish(crcr_points);
   crcr_line_pub.publish(crcr_lines);
   if(crcr_flag){
@@ -172,19 +179,38 @@ void PCDCrcrer::crcr(void)
 {
   pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
   pcl::ExtractIndices<pcl::PointXYZ> extract;
+  pcl::PassThrough<pcl::PointXYZ> pass;
   // Sampling cloud
   pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
   for(int i=0;i<(*cloud_ptr).size();i++){
     pcl::PointXYZ pt(cloud_ptr->points[i].x, cloud_ptr->points[i].y, cloud_ptr->points[i].z);
-    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit)) && (pt.z < 2.0)){
-      inliers->indices.push_back(i);
+    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit))){
       _cloud_ptr->points.push_back(pt);
+    }
+  }
+  double lowest = 1000;
+  for(int i=0;i<_cloud_ptr->points.size();i++){
+    double z = _cloud_ptr->points[i].z;
+    if(lowest > z){
+      lowest = z;
+    }
+  }
+  pass.setInputCloud(_cloud_ptr);
+  pass.setFilterFieldName("z");
+  pass.setFilterLimits(lowest, lowest+2.0);
+  pass.filter(*_cloud_ptr);
+
+  for(int i=0;i<(*cloud_ptr).size();i++){
+    pcl::PointXYZ pt(cloud_ptr->points[i].x, cloud_ptr->points[i].y, cloud_ptr->points[i].z);
+    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit)) && (pt.z < lowest+2.0) && (pt.z > lowest)){
+      inliers->indices.push_back(i);
     }
   }
   extract.setInputCloud(cloud_ptr);
   extract.setIndices(inliers);
   extract.setNegative(true);
   extract.filter(*cloud_ptr);
+
   // Surface segmentation
   pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
   pcl::SACSegmentation<pcl::PointXYZ> seg;
