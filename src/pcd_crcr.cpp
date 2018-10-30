@@ -7,6 +7,7 @@
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/filters/extract_indices.h>
+#include <pcl/segmentation/sac_segmentation.h>
 
 #include <string>
 #include <iostream>
@@ -171,16 +172,36 @@ void PCDCrcrer::crcr(void)
 {
   pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
   pcl::ExtractIndices<pcl::PointXYZ> extract;
+  // Sampling cloud
+  pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>);
   for(int i=0;i<(*cloud_ptr).size();i++){
     pcl::PointXYZ pt(cloud_ptr->points[i].x, cloud_ptr->points[i].y, cloud_ptr->points[i].z);
-    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit))){
+    if(((pt.x < x_upper_limit) && (pt.x > x_lower_limit) && (pt.y < y_upper_limit) && (pt.y > y_lower_limit)) && (pt.z < 2.0)){
       inliers->indices.push_back(i);
+      _cloud_ptr->points.push_back(pt);
     }
   }
   extract.setInputCloud(cloud_ptr);
   extract.setIndices(inliers);
   extract.setNegative(true);
   extract.filter(*cloud_ptr);
+  // Surface segmentation
+  pcl::ModelCoefficients::Ptr coefficients(new pcl::ModelCoefficients);
+  pcl::SACSegmentation<pcl::PointXYZ> seg;
+  seg.setOptimizeCoefficients(true);
+  seg.setInputCloud(_cloud_ptr);
+  seg.setModelType(pcl::SACMODEL_PLANE);
+  seg.setMethodType(pcl::SAC_RANSAC);
+  seg.setDistanceThreshold(0.1);
+  seg.setMaxIterations(100);
+  seg.setProbability(0.95);
+  seg.segment(*inliers, *coefficients);
+  extract.setInputCloud(_cloud_ptr);
+  extract.setIndices(inliers);
+  extract.setNegative(false);
+  extract.filter(*_cloud_ptr);
+
+  *cloud_ptr += *_cloud_ptr;
 
   pcl::toROSMsg(*cloud_ptr, pcd_map);
   std::string fname = output_file_name + "_" + std::to_string(crcr_count) + ".pcd";
