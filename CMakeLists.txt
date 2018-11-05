@@ -144,6 +144,7 @@ add_executable(infant_teleop_joy src/teleop_joy.cpp)
 add_executable(pcd_crcr src/pcd_crcr.cpp)
 add_executable(tkhsh_imu src/tkhsh_imu.cpp)
 add_executable(dead_reckoning src/dead_reckoning.cpp)
+add_executable(sending_goals src/sending_goals.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -169,6 +170,9 @@ target_link_libraries(tkhsh_imu
   ${catkin_LIBRARIES}
 )
 target_link_libraries(dead_reckoning
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(sending_goals
   ${catkin_LIBRARIES}
 )
 
