@@ -9,7 +9,7 @@ int main (int argc, char** argv){
   ros::init(argc,argv,"keyboard_interface");
   ros::NodeHandle n;
 
-  ros::Publisher restart_pub = n.advertise<std_msgs::Empty>("/restart", 1);
+  ros::Publisher restart_pub = n.advertise<std_msgs::Empty>("/pause/restart", 1);
 
   std::cout << "------keyboard interface---------" << std::endl;
 
