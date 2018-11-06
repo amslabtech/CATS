@@ -56,7 +56,8 @@ class WaypointMaker():
       if((s is "n") or (s is "c")):
         wp_list = ""
         for p in self.waypoints.poses:
-          wp_list += str(p.position.x) + " " + str(p.position.y) + "\n"
+        #x y pause_flag end_flag
+          wp_list += str(p.position.x) + " " + str(p.position.y) + " " + str(0) + " " + str(0) + "\n"
         with open(os.path.dirname(__file__) + "/../param/" + self.file_name, mode="w") as f:
           f.write(wp_list)
           print self.file_name + " generated!"
