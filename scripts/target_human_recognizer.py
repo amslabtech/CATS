@@ -4,6 +4,7 @@
 import rospy
 import cv2
 import numpy as np
+from std_msgs.msg import Float32
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from darknet_ros_msgs.msg import BoundingBox, BoundingBoxes
@@ -11,6 +12,8 @@ from darknet_ros_msgs.msg import BoundingBox, BoundingBoxes
 bridge = CvBridge()
 bgr_image = np.empty(1)
 image_flag = False
+target_angle = 0
+target_flag = False
 
 def ImageCallback(data):
   # print("=== ImageCallback ===")
@@ -83,8 +86,8 @@ def BBCallback(data):
           if is_orange(avr_orange) :
           #if is_budapest_red(avr_budapest_red) :
             cv2.namedWindow(bb.Class+str(count), cv2.WINDOW_NORMAL)
-            cv2.imshow(bb.Class, orange)
-            #cv2.imshow(bb.Class+str(count), budapest_red)
+            #cv2.imshow(bb.Class, orange)
+            cv2.imshow(bb.Class+str(count), orange)
             # c920r:77[deg]
             # image:480*640
             x_center = (bb.xmin + bb.xmax) * 0.5
@@ -93,6 +96,10 @@ def BBCallback(data):
             print x_center, y_center
             #print bgr_image.shape
             angle = -(x_center / 640.0 * 77.0 - 38.5)
+            global target_angle
+            target_angle = angle
+            global target_flag
+            target_flag = True
             print str(angle) + "[deg]"
           count += 1
       cv2.waitKey(3)
@@ -103,11 +110,15 @@ def process():
   print "=== target_human_recognizer ==="
   img_sub = rospy.Subscriber('/usb_cam/image_raw', Image, ImageCallback)
   yolo_sub = rospy.Subscriber('/human_rec/darknet_ros/bounding_boxes', BoundingBoxes, BBCallback)
+  angle_pub = rospy.Publisher('/target/angle', Float32, queue_size=10)
 
   r = rospy.Rate(10)
 
   while not rospy.is_shutdown():
-
+    if target_flag:
+      angle = Float32()
+      angle.data = target_angle
+      angle_pub.publish(angle)
     r.sleep()
 
 if __name__ == '__main__':
