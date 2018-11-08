@@ -7,6 +7,8 @@
 
 using namespace std;
 
+#define GPS_change 100
+
 class Map2Gps{
 	private:
 		ros::NodeHandle n;
@@ -67,7 +69,7 @@ int main (int argc, char** argv){
 
 void 
 Map2Gps::wpCallback(const std_msgs::Int32ConstPtr input){
-	if(input->data < 32) flag =true;
+	if(input->data < GPS_change) flag =true;
 	else flag = false;
 }
 
