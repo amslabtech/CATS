@@ -21,6 +21,7 @@ class Map2Gps{
 		nav_msgs::Odometry gps;
 
 		bool flag;
+		bool start_flag;
 
 	public:
 		Map2Gps(ros::NodeHandle n);
@@ -34,7 +35,7 @@ class Map2Gps{
 };
 
 Map2Gps::Map2Gps(ros::NodeHandle n) :
-	flag(true)
+	flag(true),start_flag(false)
 {
 	wp_sub = n.subscribe("/waypoint/now", 100, &Map2Gps::wpCallback, this);
 	map_matching_sub = n.subscribe("/lcl_ekf", 100, &Map2Gps::map_matchingCallback, this);
@@ -49,6 +50,8 @@ int main (int argc, char** argv){
 
 	Map2Gps map2gps(n);
 	ros::Rate loop_rate(100);
+
+	cout <<"----- tf_pub ok ------" <<endl;
 
 	while(ros::ok()){
 		map2gps.process();
@@ -71,13 +74,15 @@ Map2Gps::wpCallback(const std_msgs::Int32ConstPtr input){
 
 void 
 Map2Gps::map_matchingCallback(const nav_msgs::Odometry msg){
-	matching = msg;	
+	matching = msg;
+	start_flag = true;
 }
 
 
 void 
 Map2Gps::gpsCallback(const nav_msgs::Odometry msg){
 	gps = msg;
+	start_flag = true;
 }
 
 void 
@@ -85,16 +90,19 @@ Map2Gps::tf_broad(nav_msgs::Odometry msg){
 
 
 	transform.setOrigin( tf::Vector3(msg.pose.pose.position.x, msg.pose.pose.position.y, msg.pose.pose.position.z) );
-	tf::Quaternion q(msg.pose.pose.orientation.x, msg.pose.pose.orientation.y, msg.pose.pose.orientation.z, msg.pose.pose.orientation.w);
+	tf::Quaternion q;
+	q.setRPY(0, 0, msg.pose.pose.orientation.z);
 
 	transform.setRotation(q);
-	br.sendTransform(tf::StampedTransform(transform, ros::Time::now() , "/map", "/matching_base_link"));
+	br.sendTransform(tf::StampedTransform(transform, msg.header.stamp , "/map", "/matching_base_link"));
 
 }
 
 void
 Map2Gps::process(){
-	if(flag) tf_broad(matching);
-	else tf_broad(gps);
+	if(start_flag){
+		if(flag) tf_broad(matching);
+		else tf_broad(gps);
+	}
 
 }
