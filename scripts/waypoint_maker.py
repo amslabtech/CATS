@@ -16,7 +16,7 @@ class WaypointMaker():
     rospy.init_node('waypoint_maker')
     self.waypoints = PoseArray()
     self.wp_pub = rospy.Publisher('/waypoints', PoseArray, queue_size=10)
-    self.file_name = "kakunin_waypoints.txt"
+    self.file_name = "tkb_all_waypoints.txt"
     self.num = 0
     self.server = None
     self.menu_handler = MenuHandler()

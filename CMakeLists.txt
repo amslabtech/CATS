@@ -145,6 +145,7 @@ add_executable(pcd_crcr src/pcd_crcr.cpp)
 add_executable(tkhsh_imu src/tkhsh_imu.cpp)
 add_executable(dead_reckoning src/dead_reckoning.cpp)
 add_executable(keyboard_interface src/keyboard_interface.cpp)
+add_executable(tf_map2gps src/tf_map2gps.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -173,6 +174,9 @@ target_link_libraries(dead_reckoning
   ${catkin_LIBRARIES}
 )
 target_link_libraries(keyboard_interface
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(tf_map2gps
   ${catkin_LIBRARIES}
 )
 
