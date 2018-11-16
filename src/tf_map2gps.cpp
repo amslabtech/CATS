@@ -8,6 +8,8 @@
 
 using namespace std;
 
+#define GPS_change 100
+
 class Map2Gps{
 	private:
 		ros::NodeHandle n;
