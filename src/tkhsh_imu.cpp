@@ -37,8 +37,8 @@ void imu_callback(const sensor_msgs::ImuConstPtr& msg)
 	std::cout << offset_yawrate << "[rad/s]" << std::endl;;
 	std::cout << imu_data.angular_velocity.z << "[rad/s]" << std::endl;
 	std::cout << imu_data.angular_velocity.z - offset_yawrate << "[rad/s]" << std::endl;
-   }
 	received_flag = true;
+   }
 }
 
 int main(int argc, char** argv)
@@ -57,7 +57,8 @@ int main(int argc, char** argv)
 
   while(ros::ok()){
 	if(received_flag){
-	  imu_data.angular_velocity.z -= OFFSET_YAWRATE;
+	  // imu_data.angular_velocity.z -= OFFSET_YAWRATE;
+	  imu_data.angular_velocity.z -= offset_yawrate;
 	  imu_pub.publish(imu_data);
 	  received_flag = false;
     }

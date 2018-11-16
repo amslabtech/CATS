@@ -3,15 +3,15 @@
 	<node name="complement" pkg="cats" type="dead_reckoning" output= "screen" >
 
 		<param name="header_frame" value="/map" />	
-		<param name="child_frame" value="/matching_base_link_" />
+		<param name="child_frame" value="/matching_base_link" />
 		<param name="init_x" value="0.0" />
 		<param name="init_y" value="0.0" />
 		<param name="init_yaw" value="-0.097" />
 		<param name="dyaw/drift" value="0.001944" />
 		<param name="odom_topic" value="/odom" />
 		<!-- <param name="odom_topic" value="/tinypower/odom" /> -->
-		<!-- <param name="imu_topic" value="/imu/data/calibrated" /> -->
-		<param name="imu_topic" value="/imu/data" />
+		<param name="imu_topic" value="/imu/data/calibrated" />
+		<!-- <param name="imu_topic" value="/imu/data" /> -->
 		<remap from="lcl_ekf" to="lcl_ekf_"/>
 		<remap from="lcl_vis" to="lcl_vis_"/>
 

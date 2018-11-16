@@ -4,12 +4,14 @@
 std_msgs::Int32 wp;
 
 // イベントのあるwp_id
-const int t_l_1 = 2;
+const int t_l_1 = 33;
 bool flag0 = true;
-const int kill_t_l_1 = 3;
+const int kill_t_l_1 = 35;
 bool flag1 = true;
 const int t_l_2 = 5;
 bool flag2 = true;
+const int kill_t_l_2 = 6;
+bool flag3 = true;
 
 // タスク番号
 const int TRAFFIC_LIGHT = 1;
@@ -54,6 +56,13 @@ void process(void)
 		t.data = TRAFFIC_LIGHT;
 		task_pub.publish(t);
 		flag2 = false;
+	  }
+	}else if(wp.data == kill_t_l_2){
+	  if(flag3){
+		std_msgs::Int32 t;
+		t.data = KILL_DARKNET;
+		task_pub.publish(t);
+		flag3 = false;
 	  }
 	}
 

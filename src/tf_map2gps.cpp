@@ -4,13 +4,14 @@
 #include <tf/transform_datatypes.h>
 #include <tf/transform_broadcaster.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/Bool.h>
 
 using namespace std;
 
 class Map2Gps{
 	private:
 		ros::NodeHandle n;
-		ros::Subscriber wp_sub;
+		ros::Subscriber change_sub;
 		ros::Subscriber map_matching_sub;
 		ros::Subscriber gps_sub;
 
@@ -27,7 +28,7 @@ class Map2Gps{
 		Map2Gps(ros::NodeHandle n);
 		void map_matchingCallback(const nav_msgs::Odometry msg);
 		void gpsCallback(const nav_msgs::Odometry msg);
-		void wpCallback(const std_msgs::Int32ConstPtr input);//mapの切り替え
+		void changeCallback(const std_msgs::BoolConstPtr input);//mapの切り替え
 
 		void tf_broad(nav_msgs::Odometry msg);
 		void process();
@@ -35,11 +36,11 @@ class Map2Gps{
 };
 
 Map2Gps::Map2Gps(ros::NodeHandle n) :
-	flag(true),start_flag(false)
+	flag(false),start_flag(false)
 {
-	wp_sub = n.subscribe("/waypoint/now", 100, &Map2Gps::wpCallback, this);
+	change_sub = n.subscribe("/ndt2gps", 100, &Map2Gps::changeCallback, this);
 	map_matching_sub = n.subscribe("/lcl_ekf", 100, &Map2Gps::map_matchingCallback, this);
-	gps_sub = n.subscribe("/lcl_gps", 100, &Map2Gps::gpsCallback, this);
+	gps_sub = n.subscribe("/gps_odom_nofix_tkb", 100, &Map2Gps::gpsCallback, this);
 
 }
 
@@ -66,8 +67,8 @@ int main (int argc, char** argv){
 
 
 void 
-Map2Gps::wpCallback(const std_msgs::Int32ConstPtr input){
-	if(input->data < 32) flag =true;
+Map2Gps::changeCallback(const std_msgs::BoolConstPtr input){
+	if(input->data) flag =true;
 	else flag = false;
 }
 
@@ -101,8 +102,14 @@ Map2Gps::tf_broad(nav_msgs::Odometry msg){
 void
 Map2Gps::process(){
 	if(start_flag){
-		if(flag) tf_broad(matching);
-		else tf_broad(gps);
+		if(flag) {
+			cout<<"gps now"<<endl;
+			tf_broad(gps);
+		}
+		else {
+			cout<<"map matching now"<<endl;
+			tf_broad(matching);
+		}
 	}
 
 }
