@@ -1,4 +1,4 @@
-FROM kazukitakahashi/ros_kinetic_pcl_1.8
+FROM kazukitakahashi/ros_kinetic_pcl1.8
 
 # clone repository
 WORKDIR /root
