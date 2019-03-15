@@ -1,7 +1,7 @@
 <launch>
   <arg name="use_map_topic" default="true"/>
-  <arg name="odom_topic" default="/cats/diff_drive_controller/odom" />
-  <arg name="scan_topic" default="/front_lrf/scan" />
+  <arg name="odom_topic" default="/odom" />
+  <arg name="scan_topic" default="/scan" />
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
     <remap from="scan" to="$(arg scan_topic)"/>    
