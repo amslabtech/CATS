@@ -147,6 +147,8 @@ add_executable(dead_reckoning src/dead_reckoning.cpp)
 add_executable(keyboard_interface src/keyboard_interface.cpp)
 add_executable(tf_map2gps src/tf_map2gps.cpp)
 add_executable(task_manager src/task_manager.cpp)
+add_executable(sending_goals src/sending_goals.cpp)
+add_executable(amcl2pose src/amcl2pose.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -181,6 +183,12 @@ target_link_libraries(tf_map2gps
   ${catkin_LIBRARIES}
 )
 target_link_libraries(task_manager
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(sending_goals
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(amcl2pose
   ${catkin_LIBRARIES}
 )
 
