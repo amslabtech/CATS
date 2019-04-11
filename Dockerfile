@@ -13,7 +13,8 @@ RUN echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_releas
 RUN apt-get update
 
 RUN apt-get install -y ros-kinetic-pcl* \
-                       libpcl-dev
+                       libpcl-dev \
+                       ros-kinetic-navigation
 
 WORKDIR /root
 
