@@ -3,7 +3,7 @@
 
   <xacro:include filename="$(find cats)/urdf/common.xacro"/>
 
-  <property name="wheel_radius" value="0.125"/>
+  <property name="wheel_radius" value="0.1245"/>
   <property name="wheel_width" value="0.073"/>
   <property name="wheel_mass" value="4.0"/>
 
@@ -13,24 +13,24 @@
       <parent link="${parent}"/>
       <child link="${prefix}_wheel_link"/>
       <insert_block name="joint_axis"/>
-      <limit velocity="30" effort="23"/>
+      <limit velocity="11.64" effort="11.25"/>
     </joint>
 
     <link name="${prefix}_wheel_link">
       <visual>
-        <origin xyz="-0.0365 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="package://cats/meshes/STL/wheel.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-0.0365 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="package://cats/meshes/STL/wheel.stl" scale="0.001 0.001 0.001"/>
         </geometry>
       </collision>
       <inertial>
-        <origin xyz="-0.0365 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <cylinder_inertial mass="${wheel_mass}"
           radius="${wheel_radius}" length="${wheel_width}"/>
       </inertial>

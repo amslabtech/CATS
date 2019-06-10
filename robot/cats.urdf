@@ -2,26 +2,26 @@
 
 <robot name="cats" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find cats)/urdf/base/base.urdf.xacro"/>
+  <xacro:include filename="$(find cats)/urdf/body/body.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/wheel/wheel.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/sensors/lrf.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/sensors/camera.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/caster/caster.urdf.xacro"/>
 
   <!-- Link & Joint -->
-  <link name="base_footprint"/>
+  <link name="base_link"/>
 
-  <xacro:base parent="base_footprint">
-    <origin xyz="0 0 0"/>
-  </xacro:base>
+  <xacro:body parent="base_link">
+    <origin xyz="0 0 0.1245"/>
+  </xacro:body>
 
-  <xacro:wheel prefix="right" parent="base_link">
-    <origin xyz="0.220 -0.2135 0.125" rpy="0 0 ${M_PI/2}"/>
+  <xacro:wheel prefix="right" parent="body_link">
+    <origin xyz="0.0 -0.217 0.0" rpy="0 0 ${M_PI/2}"/>
     <axis xyz="1 0 0"/>
   </xacro:wheel>
 
-  <xacro:wheel prefix="left" parent="base_link">
-    <origin xyz="0.220 0.2135 0.125" rpy="0 0 ${-M_PI/2}"/>
+  <xacro:wheel prefix="left" parent="body_link">
+    <origin xyz="0.0 0.217 0.0" rpy="0 0 ${-M_PI/2}"/>
     <axis xyz="-1 0 0"/>
   </xacro:wheel>
 
@@ -33,8 +33,8 @@
     <origin xyz="-0.3175 0.140 0.050" rpy="0 0 0"/>
   </xacro:caster>
 
-  <xacro:hokuyo prefix="front" parent="base_link">
-    <origin xyz="0.361 0 0.1915" rpy="${M_PI} 0 0"/>
+  <xacro:hokuyo prefix="front" parent="body_link">
+    <origin xyz="0.025 0 ${0.195-0.052}" rpy="${M_PI} 0 0"/>
   </xacro:hokuyo>
 
   <xacro:hokuyo prefix="rear" parent="base_link">
@@ -69,7 +69,7 @@
       <robotNamespace>/cats</robotNamespace>
     </plugin>
   </gazebo>
-  <xacro:base_gazebo/>
+  <xacro:body_gazebo/>
   <xacro:wheel_gazebo prefix="right"/>
   <xacro:wheel_gazebo prefix="left"/>
   <xacro:caster_gazebo prefix="right"/>
