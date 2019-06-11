@@ -30,10 +30,69 @@
       </inertial>
     </link>
 
+    <joint name="upper_body_joint" type="fixed">
+      <parent link="body_link"/>
+      <child link="upper_body_link"/>
+      <origin xyz="-0.214 0 ${0.3255-0.245/2+0.020}" rpy="0 0 0"/>
+    </joint>
+
+    <link name="upper_body_link">
+      <visual>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.3 0.5"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.4 0.3 0.5"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0.25" rpy="0 0 0"/>
+        <box_inertial mass="15" depth="0.4" height="0.5" width="0.3"/>
+      </inertial>
+    </link>
+
+    <joint name="pillar_joint" type="fixed">
+      <parent link="upper_body_link"/>
+      <child link="pillar_link"/>
+      <origin xyz="0.01 0 0.5" rpy="0 0 0"/>
+    </joint>
+
+    <link name="pillar_link">
+      <visual>
+        <origin xyz="0 0 ${0.255/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.140 0.100 0.255"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 ${0.255/2}" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.140 0.100 0.255"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 ${0.255/2}" rpy="0 0 0"/>
+        <box_inertial mass="1" depth="0.140" height="0.255" width="0.100"/>
+      </inertial>
+    </link>
   </xacro:macro>
 
   <xacro:macro name="body_gazebo">
     <gazebo reference="body_link">
+      <selfCollide>false</selfCollide>
+      <mu1 value="0.05"/>
+      <mu2 value="0.05"/>
+    </gazebo>
+    <gazebo reference="upper_body_link">
+      <selfCollide>false</selfCollide>
+      <mu1 value="0.05"/>
+      <mu2 value="0.05"/>
+    </gazebo>
+    <gazebo reference="pillar_link">
       <selfCollide>false</selfCollide>
       <mu1 value="0.05"/>
       <mu2 value="0.05"/>
