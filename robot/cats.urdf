@@ -53,10 +53,10 @@
     <origin xyz="0.135 0.100 0.685" rpy="0 0 ${M_PI/3}"/>
   </xacro:webcamera>
 
-  <!--xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
-  <HDL-32E parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
-    <origin xyz="0.004135 0 0.81678" rpy="0 0 ${M_PI/12}" />
-  </HDL-32E-->
+  <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
+  <HDL-32E parent="body_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
+    <origin xyz="-0.204 0 0.979" rpy="0 0 0" />
+  </HDL-32E>
 
 
   <!-- Transmission -->
