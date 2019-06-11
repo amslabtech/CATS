@@ -18,13 +18,13 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0.0 0.0 0.2675" rpy="0 0 0"/>
+        <origin xyz="-0.240 0 0.04025" rpy="0 0 0"/>
         <geometry>
-          <box size="0.700 0.500 0.535"/>
+          <box size="0.525 0.400 0.2755"/>
         </geometry>
       </collision>
       <inertial>
-        <origin xyz="0.0 0.0 0.2675" rpy="0 0 0"/>
+        <origin xyz="-0.240 0 0" rpy="0 0 0"/>
         <mass value="26"/>
         <inertia ixx="4.941" ixy="0" ixz="0" iyz="0" iyy="5.327" izz="0.849"/>
       </inertial>

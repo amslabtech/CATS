@@ -26,11 +26,11 @@
   </xacro:wheel>
 
   <xacro:caster prefix="right" parent="base_link">
-    <origin xyz="-0.3175 -0.140 0.050" rpy="0 0 0"/>
+    <origin xyz="-0.525 -0.140 0.160" rpy="0 0 0"/>
   </xacro:caster>
 
   <xacro:caster prefix="left" parent="base_link">
-    <origin xyz="-0.3175 0.140 0.050" rpy="0 0 0"/>
+    <origin xyz="-0.525 0.140 0.160" rpy="0 0 0"/>
   </xacro:caster>
 
   <xacro:hokuyo prefix="front" parent="body_link">
