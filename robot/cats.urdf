@@ -37,8 +37,8 @@
     <origin xyz="0.025 0 ${0.195-0.052}" rpy="${M_PI} 0 0"/>
   </xacro:hokuyo>
 
-  <xacro:hokuyo prefix="rear" parent="base_link">
-    <origin xyz="-0.239 0 0.2085" rpy="0 0 ${M_PI}"/>
+  <xacro:hokuyo prefix="rear" parent="body_link">
+    <origin xyz="-0.518 0 ${0.0415+0.052}" rpy="0 0 ${M_PI}"/>
   </xacro:hokuyo>
 
   <xacro:webcamera prefix="front" parent="base_link">
@@ -55,7 +55,7 @@
 
   <!--xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
   <HDL-32E parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
-    <origin xyz="0.004135 0 0.81678" rpy="0 ${M_PI/12} 0" />
+    <origin xyz="0.004135 0 0.81678" rpy="0 0 ${M_PI/12}" />
   </HDL-32E-->
 
 
