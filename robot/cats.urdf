@@ -58,6 +58,16 @@
     <origin xyz="-0.204 0 0.979" rpy="0 0 0" />
   </HDL-32E>
 
+  <!-- realsense related -->
+  <joint name="body_link2realsense" type="fixed">
+    <origin xyz="0.04 0 0.75" rpy="0 0.7853981633974483 0"/>
+    <parent link="body_link"/>
+    <child link="camera_link"/>
+  </joint>
+
+  <link name="camera_link"/>
+  <!-- realsense related -->
+
 
   <!-- Transmission -->
   <xacro:wheel_trans prefix="right"/>
