@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+
+	<node pkg="joy" type="joy_node" name="joystick_usb" respawn="true">
+		<param name="dev" type="string" value="/dev/ps4_usb" />
+		<!-- <param name="dev" type="string" value="/dev/input/js0" /> -->
+		<!-- <param name="dev" type="string" value="/dev/input/js1" /> -->
+	</node>
+	<node pkg="joy" type="joy_node" name="joystick_remote" respawn="true">
+		<param name="dev" type="string" value="/dev/input/js0" />
+	
+	</node>
+
+	<!-- <node pkg="joystick_interrupt" type="emergency_interrupt_cheat_ndt2gps" name="em_interrupt"> -->
+	<!-- </node> -->
+
+	<node pkg="joystick_interrupt" type="joystick_interrupt" name="joiystick_interrupt">
+	<!-- <node pkg="joystick_interrupt" type="joystick4velodyne_calibration" name="joiystick_interrupt"> -->
+		<!-- <param name="interrupt_button" value="6" type="int" /> -->
+
+		
+		<param name="linear_axis" value="1" type="int" />
+		<param name="angular_axis" value="0" type="int" />
+		<!-- <param name="linear_axis2" value="7" type="int" /> -->
+		<param name="linear_axis2" value="1" type="int" />
+		<!-- <param name="angular_axis2" value="6" type="int" /> -->
+		<param name="angular_axis2" value="0" type="int" />
+		<!-- <param name="linear_vel" value="0.5" type="double" /> -->
+		<!-- <param name="angular_vel" value="0.6" type="double" /> -->
+		<param name="linear_vel" value="1.2" type="double" />
+		
+		<!-- <param name="angular_vel" value="2.5" type="double" /> -->
+		<param name="angular_vel" value="1.5" type="double" />
+		<param name="timeout" value="5.0" type="double" />
+		<remap from="~/cmd_vel" to="/t_frog/cmd_vel" />
+		<remap from="~/cmd_vel_input" to="/t_frog/cmd_vel_control" />
+	</node>
+
+</launch>
