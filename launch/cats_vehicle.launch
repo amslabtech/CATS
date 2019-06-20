@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- <include file="$(find sq1_extra)/launch/sq1_ps4_joy.launch"/>  -->
+
+	<node pkg="ypspur_ros" type="ypspur_ros" name="t_frog" respawn="true">
+
+		<remap from="/cmd_vel" to="~/cmd_vel" />
+
+		<param name="base_link_id" value="base_link" />
+
+		<param name="odom_id" value="odom" />
+
+		<param name="param_file" value="$(find cats)/config/cats_t-frog_kai.param" />
+
+		<!-- <param name="port" value="/dev/serial/by&#45;path/pci&#45;0000:00:14.0&#45;usb&#45;0:1:1.0" /> -->
+		<!--param name="port" value="/dev/T_Frog" /-->
+		<!-- <param name="port" value="/dev/serial/by&#45;path/pci&#45;0000:00:14.0&#45;usb&#45;0:6.2:1.0" /> -->
+		<param name="port" value="/dev/serial/by-path/pci-0000:00:14.0-usb-0:5.1:1.0" />
+
+		<param name="hz" value="50.0" />
+		<param name="ipc_key" value="28742" />
+	</node>
+</launch>
