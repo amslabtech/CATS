@@ -25,7 +25,7 @@ gnome-terminal -e "/opt/ros/${distro}/bin/roslaunch cats front_laser.launch" --g
 gnome-terminal -e "/opt/ros/${distro}/bin/roslaunch cats rear_laser.launch" --geometry=50x12+500+250 &
 
 ## joy
-gnome-terminal -e "/opt/ros/${distro}/bin/roslaunch cats cats_ps4.launch" --geometry=50x12+500+500 &
+gnome-terminal -e "/opt/ros/${distro}/bin/rosrun joy joy_node" --geometry=50x12+500+500 &
 
 ## realsense
 gnome-terminal -e "/${HOME}/realsense_docker/run_with_nvidia_docker.sh" --geometry=50x12+500+750 &
