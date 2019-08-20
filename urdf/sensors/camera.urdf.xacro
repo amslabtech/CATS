@@ -22,7 +22,7 @@
       </visual>
 
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <geometry>
           <mesh filename="package://cats/meshes/STL/camera.stl" scale="0.001 0.001 0.001"/>
         </geometry>
@@ -30,7 +30,7 @@
 
       <inertial>
         <mass value="0.2" />
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
         <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
       </inertial>
 

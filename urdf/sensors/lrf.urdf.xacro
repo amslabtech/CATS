@@ -62,7 +62,7 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_${prefix}_lrf_controller" filename="libgazebo_ros_laser.so">
-          <topicName>/${prefix}_lrf/scan</topicName>
+          <topicName>/${prefix}_laser/scan</topicName>
           <frameName>${prefix}_laser</frameName>
         </plugin>
       </sensor>
