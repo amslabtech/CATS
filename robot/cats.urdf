@@ -6,6 +6,7 @@
   <xacro:include filename="$(find cats)/urdf/wheel/wheel.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/sensors/lrf.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/sensors/camera.urdf.xacro"/>
+  <xacro:include filename="$(find cats)/urdf/sensors/imu.urdf.xacro"/>
   <xacro:include filename="$(find cats)/urdf/caster/caster.urdf.xacro"/>
 
   <!-- Link & Joint -->
@@ -68,6 +69,9 @@
   <link name="camera_link"/>
   <!-- realsense related -->
 
+  <xacro:imu prefix="imu" parent="base_link">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </xacro:imu>
 
   <!-- Transmission -->
   <xacro:wheel_trans prefix="right"/>
@@ -89,5 +93,6 @@
   <xacro:camera_gazebo prefix="front"/>
   <xacro:camera_gazebo prefix="right"/>
   <xacro:camera_gazebo prefix="left"/>
+  <xacro:imu_gazebo prefix="imu"/>
 
 </robot>
