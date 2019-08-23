@@ -24,9 +24,10 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+          <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0"/>
         <geometry>
-          <mesh filename="package://cats/meshes/STL/wheel.stl" scale="0.001 0.001 0.001"/>
+          <!-- <mesh filename="package://cats/meshes/STL/wheel.stl" scale="0.001 0.001 0.001"/> -->
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
       </collision>
       <inertial>
