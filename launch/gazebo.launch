@@ -22,6 +22,12 @@
 
     <include file="$(find cats)/launch/control.launch"/>
 
+    <node pkg="topic_tools" type="relay" name="cmd_vel_relay" args="/cmd_vel /cats/diff_drive_controller/cmd_vel">
+    </node>
+
+    <node pkg="topic_tools" type="relay" name="odom_relay" args="/cats/diff_drive_controller/odom /odom">
+    </node>
+
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
         args="-urdf -model cats -param robot_description"/>
 
