@@ -36,6 +36,14 @@
 
     </link>
 
+    <joint name="${prefix}_camera_optical_frame_joint" type="fixed">
+      <origin xyz="0.0 0.0 0.0" rpy="-1.57 0.0 -1.57"/>
+      <parent link="${prefix}_camera"/>
+      <child link="${prefix}_camera/optical_frame"/>
+    </joint>
+
+    <link name="${prefix}_camera/optical_frame"/>
+
   </xacro:macro>
 
   <xacro:macro name="camera_gazebo" params="prefix">
@@ -66,7 +74,7 @@
           <cameraName>${prefix}_camera</cameraName>
           <imageTopicName>/${prefix}_camera/image_raw</imageTopicName>
           <cameraInfoTopicName>/${prefix}_camera_info</cameraInfoTopicName>
-          <frameName>${prefix}_camera</frameName>
+          <frameName>${prefix}_camera/optical_frame</frameName>
           <hackBaseline>0.07</hackBaseline>
           <distortionK1>0.0</distortionK1>
           <distortionK2>0.0</distortionK2>

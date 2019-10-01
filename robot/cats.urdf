@@ -42,8 +42,13 @@
     <origin xyz="-0.518 0 ${0.0415+0.052}" rpy="0 0 ${M_PI}"/>
   </xacro:hokuyo>
 
-  <xacro:webcamera prefix="front" parent="base_link">
-    <origin xyz="0.135 0 0.685" rpy="0 0 0"/>
+  <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
+  <HDL-32E parent="body_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
+    <origin xyz="-0.204 0 0.979" rpy="0 0 0" />
+  </HDL-32E>
+
+  <xacro:webcamera prefix="front" parent="velodyne_base_link">
+    <origin xyz="0.165 0 -0.190" rpy="0 0 0"/>
   </xacro:webcamera>
 
   <xacro:webcamera prefix="right" parent="base_link">
@@ -53,11 +58,6 @@
   <xacro:webcamera prefix="left" parent="base_link">
     <origin xyz="0.135 0.100 0.685" rpy="0 0 ${M_PI/3}"/>
   </xacro:webcamera>
-
-  <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
-  <HDL-32E parent="body_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
-    <origin xyz="-0.204 0 0.979" rpy="0 0 0" />
-  </HDL-32E>
 
   <!-- realsense related -->
   <joint name="body_link2realsense" type="fixed">
