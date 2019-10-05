@@ -48,7 +48,7 @@
   </HDL-32E>
 
   <xacro:webcamera prefix="front" parent="velodyne_base_link">
-    <origin xyz="0.165 0 -0.190" rpy="0 0 0"/>
+    <origin xyz="0.165 0 -0.190" rpy="0 0.1 0"/>
   </xacro:webcamera>
 
   <xacro:webcamera prefix="right" parent="base_link">
