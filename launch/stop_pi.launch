@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <machine name="catspi" address="catspi" env-loader="$(env HOME)/ros_catkin_ws/src/stop_pi/scripts/env.sh"/>
+
+    <node pkg="stop_pi" type="emergency_flag" name="emergency_flag" machine="catspi"/>
+
+</launch>
