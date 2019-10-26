@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find cats)/launch/cats_vehicle.launch"/>
+  <include file="$(find cats)/launch/front_laser.launch"/>
+  <include file="$(find cats)/launch/rear_laser.launch"/>
+  <include file="$(find cats)/launch/front_cam.launch"/>
+  <include file="$(find cats)/launch/robot_state.launch"/>
+  <include file="$(find velodyne_pointcloud)/launch/32e_points.launch"/>
+</launch>
