@@ -3,16 +3,16 @@
 
   <xacro:include filename="$(find cats)/urdf/common.xacro"/>
 
-  <property name="wheel_radius" value="0.1245"/>
-  <property name="wheel_width" value="0.073"/>
-  <property name="wheel_mass" value="4.0"/>
+  <xacro:property name="wheel_radius" value="0.1245"/>
+  <xacro:property name="wheel_width" value="0.073"/>
+  <xacro:property name="wheel_mass" value="4.0"/>
 
   <xacro:macro name="wheel" params="prefix parent *joint_origin *joint_axis">
     <joint name="${prefix}_wheel_joint" type="continuous">
-      <insert_block name="joint_origin"/>
+      <xacro:insert_block name="joint_origin"/>
       <parent link="${parent}"/>
       <child link="${prefix}_wheel_link"/>
-      <insert_block name="joint_axis"/>
+      <xacro:insert_block name="joint_axis"/>
       <limit velocity="11.64" effort="11.25"/>
     </joint>
 

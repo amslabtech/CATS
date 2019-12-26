@@ -5,7 +5,7 @@
   <xacro:include filename="$(find cats)/urdf/common.xacro"/>
   <xacro:macro name="body" params="parent *joint_origin">
     <joint name="body_link_joint" type="fixed">
-      <insert_block name="joint_origin"/>
+      <xacro:insert_block name="joint_origin"/>
       <parent link="${parent}"/>
       <child link="body_link"/>
     </joint>

@@ -5,7 +5,7 @@
 
   <xacro:macro name="caster" params="prefix parent *joint_origin">
     <joint name="${prefix}_caster_joint" type="fixed">
-      <insert_block name="joint_origin"/>
+      <xacro:insert_block name="joint_origin"/>
       <parent link="${parent}"/>
       <child link="${prefix}_caster_base_link"/>
     </joint>
