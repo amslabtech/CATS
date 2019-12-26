@@ -15,4 +15,5 @@
       iyy="${(mass*(height*height+depth*depth))/12}" iyz="0"
       izz="${(mass*(height*height+width*width))/12}" />
   </xacro:macro>
+
 </robot>

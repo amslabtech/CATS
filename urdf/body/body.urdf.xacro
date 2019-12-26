@@ -16,6 +16,9 @@
         <geometry>
           <mesh filename="package://cats/meshes/STL/body.stl" scale="0.001 0.001 0.001"/>
         </geometry>
+        <material name="gray">
+          <color rgba="0.8 0.8 0.8 1.0"/>
+        </material>
       </visual>
       <collision>
         <origin xyz="-0.240 0 0.04025" rpy="0 0 0"/>
@@ -42,6 +45,8 @@
         <geometry>
           <box size="0.4 0.3 0.5"/>
         </geometry>
+        <material name="gray">
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 0.25" rpy="0 0 0"/>
@@ -67,6 +72,8 @@
         <geometry>
           <box size="0.140 0.100 0.255"/>
         </geometry>
+        <material name="gray">
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 ${0.255/2}" rpy="0 0 0"/>
@@ -86,16 +93,19 @@
       <selfCollide>false</selfCollide>
       <mu1 value="0.05"/>
       <mu2 value="0.05"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
     <gazebo reference="upper_body_link">
       <selfCollide>false</selfCollide>
       <mu1 value="0.05"/>
       <mu2 value="0.05"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
     <gazebo reference="pillar_link">
       <selfCollide>false</selfCollide>
       <mu1 value="0.05"/>
       <mu2 value="0.05"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
 
   </xacro:macro>

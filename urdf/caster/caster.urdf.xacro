@@ -16,6 +16,8 @@
         <geometry>
           <mesh filename="package://cats/meshes/STL/caster/caster_base.stl" scale="0.001 0.001 0.001"/>
         </geometry>
+        <material name="gray">
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -43,6 +45,8 @@
         <geometry>
           <mesh filename="package://cats/meshes/STL/caster/caster_arm.stl" scale="0.001 0.001 0.001"/>
         </geometry>
+        <material name="gray">
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -70,6 +74,8 @@
         <geometry>
           <mesh filename="package://cats/meshes/STL/caster/caster_wheel.stl" scale="0.001 0.001 0.001"/>
         </geometry>
+        <material name="gray">
+        </material>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>
@@ -89,16 +95,19 @@
       <selfCollide>false</selfCollide>
       <mu1 value="0"/>
       <mu2 value="0"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
     <gazebo reference="${prefix}_caster_arm_link">
       <selfCollide>false</selfCollide>
       <mu1 value="0.05"/>
       <mu2 value="0.05"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
     <gazebo reference="${prefix}_caster_wheel_link">
       <selfCollide>false</selfCollide>
       <mu1 value="0.8"/>
       <mu2 value="0.8"/>
+      <material>Gazebo/Gray</material>
     </gazebo>
   </xacro:macro>
 
