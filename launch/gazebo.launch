@@ -18,7 +18,7 @@
         <arg name="headless" value="$(arg headless)"/>
     </include>
 
-    <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)"/>
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
 
     <include file="$(find cats)/launch/control.launch"/>
 
