@@ -35,7 +35,7 @@
       </collision>
       <inertial>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <cylinder_inertial mass="${wheel_mass}"
+        <xacro:cylinder_inertial mass="${wheel_mass}"
           radius="${wheel_radius}" length="${wheel_width}"/>
       </inertial>
     </link>

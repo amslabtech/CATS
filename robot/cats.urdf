@@ -43,9 +43,9 @@
   </xacro:hokuyo>
 
   <xacro:include filename="$(find velodyne_description)/urdf/HDL-32E.urdf.xacro"/>
-  <HDL-32E parent="body_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
+  <xacro:HDL-32E parent="body_link" name="velodyne" topic="/velodyne_points" hz="10" samples="220">
     <origin xyz="-0.204 0 0.979" rpy="0 0 0" />
-  </HDL-32E>
+  </xacro:HDL-32E>
 
   <xacro:webcamera prefix="front" parent="velodyne_base_link">
     <origin xyz="0.165 0 -0.190" rpy="0 0.1 0"/>
