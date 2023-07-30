@@ -30,14 +30,14 @@ done
 
 OUTPUT="${OUTPUT%.*}"
 
-gnome-terminal -e "/opt/ros/kinetic/bin/roscore" --geometry=45x12+0+0 &
+gnome-terminal -e "/opt/ros/$ROS_DISTRO/bin/roscore" --geometry=45x12+0+0 &
 sleep 1.0s
 
-gnome-terminal -e "/opt/ros/kinetic/bin/rosrun rviz rviz -d ../config/pcd_crcr.rviz" --geometry=45x12+475+0 &
+gnome-terminal -e "/opt/ros/$ROS_DISTRO/bin/rosrun rviz rviz -d ../config/pcd_crcr.rviz" --geometry=45x12+475+0 &
 sleep 0.5s
 
-gnome-terminal -e "/opt/ros/kinetic/bin/roslaunch cats pcd_crcr.launch output_file_name:=$OUTPUT" --geometry=45x12+895+0 &
+gnome-terminal -e "/opt/ros/$ROS_DISTRO/bin/roslaunch cats pcd_crcr.launch output_file_name:=$OUTPUT" --geometry=45x12+895+0 &
 sleep 0.5s
 
-gnome-terminal -e "/opt/ros/kinetic/bin/rosrun pcl_ros pcd_to_pointcloud $INPUT _frame_id:=/map" --geometry=45x12+1315+0 &
+gnome-terminal -e "/opt/ros/$ROS_DISTRO/bin/rosrun pcl_ros pcd_to_pointcloud $INPUT _frame_id:=map _latch:=true" --geometry=45x12+1315+0 &
 sleep 0.5s
